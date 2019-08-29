@@ -1,0 +1,148 @@
+Task list for the Beta Strategy assignment.
+
+Author: ZONGLIN PENG
+
+___________________________________README BETA________________________________________
+
+Instruction:
+1. Game board is stored in the object of the game; in this case it is in the Beta.
+2. Multiple copy constructors are provided depends on how the user would like to 
+	create the Beta game in the game factory. Under the current implementation
+	the two constructors of BoardImpl are used rather than the static converter.
+3. Forgot what to say here.
+4. Line up objects are for creating my tests and they only produce lists of pieces.
+5. Strategy Exception is only thrown when the pieces of a side is less that 12.
+
+___________________________________TODO LIST__________________________________________
+
+Infrastructure:
+Board can be converted to BoardImpl [DONE]
+Pieces are laid in the right place [DONE]
+All the helpers and getter/setters are tested in Board, Square, Piece [DONE]
+
+
+Rules:
+Rank [DONE]
+Valid move
+	Movable [DONE]
+	1-step / straight path [DONE]
+		no piece on path [DONE]
+		is a strike [DONE]
+
+
+Beta Game:
+1. Whose Turn
+	Red first [DONE]
+	Alternative [DONE]
+
+2. Number of Turn
+	After the 8th Red Turn, RED wins [DONE]
+3. Move
+  -Valid
+	all pieces up [DONE]
+	all pieces down [DONE]
+	all pieces left [DONE]
+	all pieces right [DONE]
+  -Exception
+	scout not blocked [NOT CONSIDERED]
+	diagonal [DONE]
+	move not movable (flag) [DONE]
+	out of boundary [DONE]
+	stay still [DONE]
+	
+4. Strike
+	Different color [DONE]
+	Piece ranks compare [DONE]
+		equal rank [DONE]
+	move piece to defeated one [DONE]
+	
+5. Who wins
+	flag is removed  [DONE]
+	no movable pieces [NOT CONSIDERED]
+	GAME_OVER when move after a win [DONE]
+	GAME_OVER when move after a game_over [DONE]
+	
+	
+Gamma Game:
+Create board: Upon creation, the board are filled with the given pieces and the pre-defined choke points;
+	all other square are not created / put in board; get piece from choke point or non-created square will
+	return NULL.
+	
+1. Choke point 
+	choke red [DONE]
+	choke blue [DONE]
+2. Remove move limit
+	move until red wins [DONE]
+	move until blue wins [DONE]
+3. Abstract strategy pattern [Has Been Done]
+4. Move Repetition Rule
+	move repetition red [DONE]
+	move repetition blue [DONE]
+5. Add state object 
+6. Add base game pattern [DELTA: move Move more to BaseGame]
+
+
+Delta Game:
+1. Expend board to 10 X 10 [DONE]
+  - throw a StrategyException: [DONE]
+	1) has same piece numbers () [DONE]
+	2) piece placed on choke () [DONE]
+	3) piece placed out of bound () [CAN`T CHECK]
+	Are there BLUE and RED pieces only in the rows specified by the version? //Color piece in their rows [DONE]
+	Is the piece distribution correct for the version? //same number of pieces [DONE]
+	Are there any pieces not in the correct rows? //in the valid squares, not middle rows [DONE]
+2. Add choke points [DONE]
+3. Move: [DONE]
+	1) Bomb [DONE]
+	2) Miner [DONE]
+	4) Spy [DONE]
+	5) Scout [DONE]
+		1> block path by piece [DONE]
+		2> choke point [DONE]
+4. Defeat: [DONE]
+	1) Bomb [DONE]
+		1> bomb does not move when bang [DONE]
+		2> Miner remove bomb [DONE]
+	4) Spy [DONE]
+		1> spy defeats marshal [DONE]
+		2> marshal defeats spy [DONE]
+	5) Scout [DONE]
+		1> adj attack [DONE]
+		2> no long attach [DONE]
+5. No movable pieces [DONE]
+	1) only bomb and flag [DONE]
+	2) movable piece trapped [DONE]
+	3) strike even [DONE]
+	4) strike win [DONE]
+	5) strike lost [DONE]
+
+	
+Epsilon Game:
+1. Aggressor Advantage [DONE]
+	1) equal rank [DONE]
+	2) Scout long attack [DONE]
+2. Distance SCOUT Attack  [DONE]
+	1) success
+		1> up less than 3 square [DONE]
+			1] >1 opponent piece not move [DONE]
+			2] =1 opponent piece move [DONE]
+		2> down less than 3 square [DONE]
+			1] >1 opponent piece not move [DONE]
+			2] =1 opponent piece move [DONE]
+		3> left less than 3 square [DONE]
+			1] >1 opponent piece not move [DONE]
+			2] =1 opponent piece move [DONE]
+		4> right less than 3 square [DONE]
+			1] >1 opponent piece not move [DONE]
+			2] =1 opponent piece move [DONE]
+	2) failure
+		1> over self piece [DONE]
+		2> over opponent piece [DONE]
+		3> over choke point [DONE]
+		1> up more than 3 square [DONE]
+		2> down more than 3 square [DONE]
+		3> left more than 3 square [DONE]
+		4> right more than 3 square [DONE]
+3. Depleting BOMBs
+	1) Bomb wins at the first strike
+	2) Bomb and pieces are removed at the second attach
